@@ -15,7 +15,7 @@ class TestMainWindow(unittest.TestCase):
         self.assertNotEqual(self.w.isCapturing, False)
         self.assertNotEqual(capture.instance.isCapturing, False)
         self.assertEqual(self.w.startbtntext.get(), 'Stop Capturing!')
-        self.assertEqual(self.w.intervaltime.get(), capture.intervaltime)
+        self.assertEqual(self.w.intervaltime.get(), capture.instance.intervaltime)
     
     def test_handleCapture_while_capturing(self):
         self.w.isCapturing = True
