@@ -35,6 +35,7 @@ class MainWindow(Frame):
 
         entry = Entry(dirLocator, textvariable=self.savedir)
         entry.grid(row=0, column=1)
+        self.pathEntry = entry
 
         btn = Button(dirLocator, text='...', command=self.locateSaveDir)
         btn.grid(row=0, column=2, padx=5)
@@ -57,6 +58,7 @@ class MainWindow(Frame):
 
         entry = Entry(intervalTimer, textvariable=self.intervaltime, width=3)
         entry.pack(side=LEFT)
+        self.intervalEntry = entry
 
         label = Label(intervalTimer, text='sec')
         label.pack(side=LEFT)
@@ -68,6 +70,8 @@ class MainWindow(Frame):
         self.startbtntext.set('Start Capturing!')
         button = Button(self, command=self.handleCapture, textvariable=self.startbtntext)
         button.pack(fill=X)
+        self.ori_abg = button.cget('activebackground')
+        self.ori_bg = button.cget('bg')
         return button
 
     def handleCapture(self):
@@ -76,8 +80,14 @@ class MainWindow(Frame):
             self.startbtntext.set('Stop Capturing!')
             capture.instance.savedir = self.savedir.get()
             capture.instance.intervaltime = self.intervaltime.get()
+            self.startButton.configure(activebackground='red3', bg='red2')
+            self.pathEntry.config(state='disabled')
+            self.intervalEntry.config(state='disabled')
             capture.instance.start()
         else:
             self.isCapturing = False
             self.startbtntext.set('Start Capturing!')
+            self.startButton.configure(activebackground=self.ori_abg, bg=self.ori_bg)
+            self.pathEntry.config(state='normal')
+            self.intervalEntry.config(state='normal')
             capture.instance.stop()
