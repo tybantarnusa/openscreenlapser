@@ -21,6 +21,8 @@ class Capture:
         self.timer = 0
 
     def takeScreenshots(self):
+        if not os.path.exists(self.savedir):
+            os.makedirs(self.savedir)
         targetfile = os.path.join(self.savedir, 'screen-' + str(self.counter) + '.png')
         image = ImageGrab.grab()
         image.save(targetfile)
