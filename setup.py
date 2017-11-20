@@ -12,6 +12,6 @@ setup(
     author='Mgs. M. Thoyib Antarnusa',
     author_email='tybantarnusa@gmail.com',
     url='http://www.github.com/tybantarnusa/openscreenlapser/',
-    packages=find_packages(exclude=('tests',)),
+    packages=['openscreenlapser', 'openscreenlapser.aesthetic', 'openscreenlapser.logic'],
     install_requires=REQUIRED,
 )
