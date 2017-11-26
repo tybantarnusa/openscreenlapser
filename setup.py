@@ -2,7 +2,8 @@ from setuptools import setup
 
 REQUIRED = [
     'Pillow',
-    'pyscreenshot'
+    'pyscreenshot',
+    'ffmpeg-python'
 ]
 
 setup(

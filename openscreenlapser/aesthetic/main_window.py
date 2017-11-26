@@ -91,3 +91,11 @@ class MainWindow(Frame):
             self.pathEntry.config(state='normal')
             self.intervalEntry.config(state='normal')
             capture.instance.stop()
+
+    def createCreateVideoButton(self):
+        pass
+
+    def showCreateVideoButton(self):
+        pass
+
+    def handleCreateVideo(self):

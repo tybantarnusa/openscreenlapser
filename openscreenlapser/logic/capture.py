@@ -4,7 +4,7 @@ import pyscreenshot as ImageGrab
 
 class Capture:
     def __init__(self):
-        self.savedir = expanduser('~/Desktop')
+        self.savedir = expanduser('~')
         self.intervaltime = 60
         self.isCapturing = False
         self.counter = 0
