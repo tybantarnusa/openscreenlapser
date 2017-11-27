@@ -24,5 +24,9 @@ class TestCaptureLogic(unittest.TestCase):
         capture.instance.takeScreenshots()
         self.assertEqual(capture.instance.counter, 33)
 
+    def test_set_filename(self):
+        capture.instance.setFileName('screen')
+        self.assertEqual(capture.instance.filename, 'screen')
+
 if __name__ == '__main__':
     unittest.main()

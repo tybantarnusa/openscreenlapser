@@ -30,6 +30,9 @@ class MainWindow(Frame):
         self.startButton = self.createStartButton()
         self.createVideoButton = self.createCreateVideoButton()
 
+    def createFileNamer(self):
+        pass
+
     def createDirLocator(self):
         dirLocator = Frame(self)
 

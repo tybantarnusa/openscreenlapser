@@ -9,6 +9,7 @@ class Capture:
         self.isCapturing = False
         self.counter = 0
         self.timer = 0
+        self.filename = ''
 
     def start(self):
         if not os.path.exists(self.savedir):
@@ -35,5 +36,8 @@ class Capture:
             if self.timer == self.intervaltime + 1:
                 self.takeScreenshots()
                 self.timer = 0
+
+    def setFileName(self, name):
+        pass
 
 instance = Capture()
