@@ -92,7 +92,7 @@ class MainWindow(Frame):
             self.isCapturing = True
             self.startbtntext.set('Stop Capturing!')
             capture.instance.savedir = self.savedir.get()
-            capture.instance.filename = self.filename.get()
+            capture.instance.setFileName(self.filename.get())
             capture.instance.intervaltime = self.intervaltime.get()
             self.startButton.configure(activebackground='red3', bg='red2')
             self.disableAll()

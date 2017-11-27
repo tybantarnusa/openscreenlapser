@@ -38,6 +38,6 @@ class Capture:
                 self.timer = 0
 
     def setFileName(self, name):
-        pass
+        self.filename = name
 
 instance = Capture()
