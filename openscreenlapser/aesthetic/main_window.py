@@ -11,6 +11,9 @@ class MainWindow(Frame):
         self.savedir = StringVar()
         self.savedir.set(capture.instance.savedir)
 
+        self.filename = StringVar()
+        self.filename.set(capture.instance.filename)
+
         self.startbtntext = StringVar()
 
         self.intervaltime = IntVar()
@@ -30,21 +33,24 @@ class MainWindow(Frame):
         self.startButton = self.createStartButton()
         self.createVideoButton = self.createCreateVideoButton()
 
-    def createFileNamer(self):
-        pass
-
     def createDirLocator(self):
         dirLocator = Frame(self)
 
-        label = Label(dirLocator, text='Output screenshots folder:')
+        label = Label(dirLocator, text='Ouput file name:', anchor=E, justify=RIGHT)
         label.grid(row=0, column=0)
 
+        self.nameEntry = Entry(dirLocator, textvariable=self.filename)
+        self.nameEntry.grid(row=0, column=1)
+        
+        label = Label(dirLocator, text='Output screenshots folder:')
+        label.grid(row=1, column=0)
+
         entry = Entry(dirLocator, textvariable=self.savedir)
-        entry.grid(row=0, column=1)
+        entry.grid(row=1, column=1)
         self.pathEntry = entry
 
         self.dirLocatorBtn = Button(dirLocator, text='...', command=self.locateSaveDir)
-        self.dirLocatorBtn.grid(row=0, column=2, padx=5)
+        self.dirLocatorBtn.grid(row=1, column=2, padx=5)
 
         dirLocator.pack(fill=X)
         return dirLocator
@@ -86,6 +92,7 @@ class MainWindow(Frame):
             self.isCapturing = True
             self.startbtntext.set('Stop Capturing!')
             capture.instance.savedir = self.savedir.get()
+            capture.instance.filename = self.filename.get()
             capture.instance.intervaltime = self.intervaltime.get()
             self.startButton.configure(activebackground='red3', bg='red2')
             self.disableAll()
@@ -140,11 +147,13 @@ class MainWindow(Frame):
         self.enableAll()
 
     def disableAll(self):
+        self.nameEntry.config(state='disabled')
         self.pathEntry.config(state='disabled')
         self.intervalEntry.config(state='disabled')
         self.dirLocatorBtn.config(state='disabled')
 
     def enableAll(self):
+        self.nameEntry.config(state='normal')
         self.pathEntry.config(state='normal')
         self.intervalEntry.config(state='normal')
         self.dirLocatorBtn.config(state='normal')

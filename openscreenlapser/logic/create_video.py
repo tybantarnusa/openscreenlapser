@@ -1,4 +1,6 @@
+import os
 import ffmpeg
+import capture
 
 class CreateVideo:
     def __init__(self):
@@ -7,7 +9,7 @@ class CreateVideo:
     def create(self, framerate, inputPath, outputName):
         try:
             (ffmpeg
-                .input(inputPath + '/screen-%03d.png')
+                .input(os.path.join(inputPath, ('%s%%03d.png' % capture.instance.filename)))
                 .output(outputName)
                 .overwrite_output()
                 .run()
