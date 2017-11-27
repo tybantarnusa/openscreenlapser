@@ -1,6 +1,8 @@
 from Tkinter import *
 import tkFileDialog
+import time
 from logic import capture
+from logic import create_video
 
 class MainWindow(Frame):
     def __init__(self, master=None):
@@ -26,6 +28,7 @@ class MainWindow(Frame):
         self.dirLocator = self.createDirLocator()
         self.intervalTimer = self.createIntervalTimer()
         self.startButton = self.createStartButton()
+        self.createVideoButton = self.createCreateVideoButton()
 
     def createDirLocator(self):
         dirLocator = Frame(self)
@@ -37,8 +40,8 @@ class MainWindow(Frame):
         entry.grid(row=0, column=1)
         self.pathEntry = entry
 
-        btn = Button(dirLocator, text='...', command=self.locateSaveDir)
-        btn.grid(row=0, column=2, padx=5)
+        self.dirLocatorBtn = Button(dirLocator, text='...', command=self.locateSaveDir)
+        self.dirLocatorBtn.grid(row=0, column=2, padx=5)
 
         dirLocator.pack(fill=X)
         return dirLocator
@@ -72,6 +75,7 @@ class MainWindow(Frame):
         button.pack(fill=X)
         self.ori_abg = button.cget('activebackground')
         self.ori_bg = button.cget('bg')
+
         return button
 
     def handleCapture(self):
@@ -81,21 +85,64 @@ class MainWindow(Frame):
             capture.instance.savedir = self.savedir.get()
             capture.instance.intervaltime = self.intervaltime.get()
             self.startButton.configure(activebackground='red3', bg='red2')
-            self.pathEntry.config(state='disabled')
-            self.intervalEntry.config(state='disabled')
+            self.disableAll()
             capture.instance.start()
         else:
             self.isCapturing = False
             self.startbtntext.set('Start Capturing!')
             self.startButton.configure(activebackground=self.ori_abg, bg=self.ori_bg)
-            self.pathEntry.config(state='normal')
-            self.intervalEntry.config(state='normal')
             capture.instance.stop()
+            self.hideCaptureButton()
+            self.showCreateVideoButton()
 
     def createCreateVideoButton(self):
-        pass
+        frame = Frame(self)
+
+        button = Button(frame, command=self.handleCreateVideo, text='Create Video!')
+        button.grid(row=0, column=0)
+
+        button = Button(frame, command=self.handleStartOver, text='Start Over')
+        button.grid(row=0, column=1)
+        return frame
 
     def showCreateVideoButton(self):
-        pass
+        self.createVideoButton.pack(fill=X)
+
+    def hideCreateVideoButton(self):
+        self.createVideoButton.pack_forget()
+
+    def showCaptureButton(self):
+        self.startButton.pack(fill=X)
+    
+    def hideCaptureButton(self):
+        self.startButton.pack_forget()
 
     def handleCreateVideo(self):
+        ftypes = [('MP4', '.mp4'), ('All files', '*')]
+        out = tkFileDialog.asksaveasfilename(parent=self, initialdir=capture.instance.savedir, title='Save video as', filetypes=ftypes, defaultextension='.mp4')
+        if len(out) > 0:
+            self.hideCreateVideoButton()
+            self.showCaptureButton()
+            self.startbtntext.set('Creating video...')
+            self.startButton.config(state='disabled')
+            self.update()
+            create_video.instance.create(24, capture.instance.savedir, out)
+            self.handleStartOver()
+
+    def handleStartOver(self):
+        self.hideCreateVideoButton()
+        self.startbtntext.set('Start Capturing!')
+        self.startButton.config(state='normal')
+        self.showCaptureButton()
+        self.enableAll()
+
+    def disableAll(self):
+        self.pathEntry.config(state='disabled')
+        self.intervalEntry.config(state='disabled')
+        self.dirLocatorBtn.config(state='disabled')
+
+    def enableAll(self):
+        self.pathEntry.config(state='normal')
+        self.intervalEntry.config(state='normal')
+        self.dirLocatorBtn.config(state='normal')
+
