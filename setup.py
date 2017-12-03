@@ -3,7 +3,8 @@ from setuptools import setup
 REQUIRED = [
     'Pillow',
     'pyscreenshot',
-    'ffmpeg-python'
+    'ffmpeg-python',
+    'opencv-python'
 ]
 
 setup(
