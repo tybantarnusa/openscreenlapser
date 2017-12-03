@@ -29,6 +29,9 @@ class Capture:
         image.save(targetfile)
         self.counter = self.counter + 1
 
+    def takeWebcam(self):
+        pass
+
     def logicLoop(self, app):
         app.after(1000, self.logicLoop, app)
         if self.isCapturing:
