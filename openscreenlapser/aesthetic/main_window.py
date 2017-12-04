@@ -173,12 +173,14 @@ class MainWindow(Frame):
         self.pathEntry.config(state='disabled')
         self.intervalEntry.config(state='disabled')
         self.dirLocatorBtn.config(state='disabled')
-        self.webcamCheckbox.config(state='disabled')
+        if capture.instance.hasCam():
+            self.webcamCheckbox.config(state='disabled')
 
     def enableAll(self):
         self.nameEntry.config(state='normal')
         self.pathEntry.config(state='normal')
         self.intervalEntry.config(state='normal')
         self.dirLocatorBtn.config(state='normal')
-        self.webcamCheckbox.config(state='normal')
+        if capture.instance.hasCam():
+            self.webcamCheckbox.config(state='normal')
 
