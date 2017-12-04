@@ -36,10 +36,20 @@ class Capture:
 
         if self.usingWebcam:
             webcam = self.takeWebcam()
-            image.paste(webcam, (0, 0))
+            image = self.combineImageWebcam(image, webcam)
         
         image.save(targetfile)
         self.counter = self.counter + 1
+
+    def combineImageWebcam(self, baseImage, webcamImage):
+        w, h = baseImage.size
+
+        webcamW = int(0.2 * w)
+        webcamH = int((3.0 * webcamW) / 4.0)
+
+        webcamImage.thumbnail((webcamW, webcamH))
+        baseImage.paste(webcamImage, (10, 10))
+        return baseImage
 
     def initWebcam(self):
         pygame.init()
