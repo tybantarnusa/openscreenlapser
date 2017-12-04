@@ -58,6 +58,11 @@ class Capture:
         camlist = pygame.camera.list_cameras()
         if camlist:
             self.cam = pygame.camera.Camera(camlist[0], (640,480))
+        else:
+            self.cam = None
+
+    def hasCam(self):
+        return self.cam != None
 
     def startWebcam(self):
         self.cam.start()

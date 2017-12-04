@@ -19,6 +19,9 @@ class MainWindow(Frame):
         self.intervaltime = IntVar()
         self.intervaltime.set(60)
 
+        self.usingWebcam = IntVar()
+        self.usingWebcam.set(0)
+
         self.isCapturing = False
 
         self.master.title('OpenScreenLapser')
@@ -29,6 +32,9 @@ class MainWindow(Frame):
 
     def createWidgets(self):
         self.dirLocator = self.createDirLocator()
+        if capture.instance.hasCam():
+            self.webcamCheckbox = self.createWebcamCheckbox()
+        Label(self).pack()
         self.intervalTimer = self.createIntervalTimer()
         self.startButton = self.createStartButton()
         self.createVideoButton = self.createCreateVideoButton()
@@ -36,8 +42,8 @@ class MainWindow(Frame):
     def createDirLocator(self):
         dirLocator = Frame(self)
 
-        label = Label(dirLocator, text='Ouput file name:', anchor=E, justify=RIGHT)
-        label.grid(row=0, column=0)
+        label = Label(dirLocator, text='Output file name:', anchor=E, justify=RIGHT)
+        label.grid(row=0, column=0, sticky=E)
 
         self.nameEntry = Entry(dirLocator, textvariable=self.filename)
         self.nameEntry.grid(row=0, column=1)
@@ -61,8 +67,24 @@ class MainWindow(Frame):
             self.savedir.set(output)
             capture.instance.savedir = output
 
+    def createWebcamCheckbox(self):
+        frame = Frame(self)
+
+        checkbox = Checkbutton(frame, text='Use webcam', variable=self.usingWebcam, command=self.updateWebcamLogic)
+        checkbox.pack(side=RIGHT)
+
+        frame.pack(fill=X)
+
+        return checkbox
+
+    def updateWebcamLogic(self):
+        if self.usingWebcam.get() == 1:
+            capture.instance.startWebcam()
+        else:
+            capture.instance.stopWebcam()
+
+
     def createIntervalTimer(self):
-        Label(self).pack()
         intervalTimer = Frame(self)
 
         label = Label(intervalTimer, text='Interval:')
@@ -151,10 +173,12 @@ class MainWindow(Frame):
         self.pathEntry.config(state='disabled')
         self.intervalEntry.config(state='disabled')
         self.dirLocatorBtn.config(state='disabled')
+        self.webcamCheckbox.config(state='disabled')
 
     def enableAll(self):
         self.nameEntry.config(state='normal')
         self.pathEntry.config(state='normal')
         self.intervalEntry.config(state='normal')
         self.dirLocatorBtn.config(state='normal')
+        self.webcamCheckbox.config(state='normal')
 
