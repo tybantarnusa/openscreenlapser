@@ -48,7 +48,7 @@ class Capture:
         webcamH = int((3.0 * webcamW) / 4.0)
 
         webcamImage.thumbnail((webcamW, webcamH))
-        baseImage.paste(webcamImage, (10, 10))
+        baseImage.paste(webcamImage, (5, 5))
         return baseImage
 
     def initWebcam(self):
