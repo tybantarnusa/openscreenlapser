@@ -1,6 +1,6 @@
 # OpenScreenLapser
 
-[![Build Status](https://travis-ci.org/tybantarnusa/openscreenlapser.svg?branch=develop)](https://travis-ci.org/tybantarnusa/openscreenlapser)
+[![Build Status](https://travis-ci.org/tybantarnusa/openscreenlapser.svg?branch=master)](https://travis-ci.org/tybantarnusa/openscreenlapser)
 
 OpenScreenLapser is a software to make timelapse video of your screen written in Python. It works by taking screenshots of your screen at any defined time intervals automatically then combine them into one video.
 
