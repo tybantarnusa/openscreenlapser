@@ -4,7 +4,7 @@ REQUIRED = [
     'Pillow',
     'pyscreenshot',
     'ffmpeg-python',
-    'opencv-python'
+    'pygame'
 ]
 
 setup(
