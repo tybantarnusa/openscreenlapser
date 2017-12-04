@@ -1,6 +1,5 @@
 import unittest
 from logic import capture
-from SimpleCV.ImageClass import Image
 
 class TestCaptureLogic(unittest.TestCase):
     def setUp(self):
@@ -28,10 +27,6 @@ class TestCaptureLogic(unittest.TestCase):
     def test_set_filename(self):
         capture.instance.setFileName('screen')
         self.assertEqual(capture.instance.filename, 'screen')
-
-    def test_take_webcam(self):
-        img = capture.instance.takeWebcam()
-        self.assertIsInstance(img, Image)
 
 if __name__ == '__main__':
     unittest.main()
