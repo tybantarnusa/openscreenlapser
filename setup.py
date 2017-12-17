@@ -9,11 +9,20 @@ REQUIRED = [
 
 setup(
     name='openscreenlapser',
-    version='0.0.1',
+    version='1.0.0',
     description='Screen timelapse video maker.',
     author='Mgs. M. Thoyib Antarnusa',
-    author_email='tybantarnusa@gmail.com',
+    author_email='tybantarnusa@null.net',
+    maintainer='Mgs. M. Thoyib Antarnusa',
+    maintainer_email='tybantarnusa@null.net',
     url='http://www.github.com/tybantarnusa/openscreenlapser/',
-    packages=['openscreenlapser', 'openscreenlapser.aesthetic', 'openscreenlapser.logic'],
+    license='Apache',
     install_requires=REQUIRED,
+    packages=['openscreenlapser', 'openscreenlapser.aesthetic', 'openscreenlapser.logic'],
+    entry_points={
+        'gui_scripts': ['openscreenlapser = openscreenlapser.main:main']
+    },
+    classifiers=[
+        'License :: OSI Approved :: Apache Software License',
+    ],
 )
