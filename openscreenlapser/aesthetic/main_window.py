@@ -1,8 +1,8 @@
 from Tkinter import *
 import tkFileDialog
 import time
-from openscreenlapser.logic import capture
-from openscreenlapser.logic import create_video
+from logic import capture
+from logic import create_video
 
 class MainWindow(Frame):
     def __init__(self, master=None):
@@ -24,7 +24,7 @@ class MainWindow(Frame):
 
         self.isCapturing = False
 
-        self.master.title('OpenScreenLapser')
+        self.master.title('OpenScreenLapsers')
         self.master.minsize(width=400, height=100)
         self.master.resizable(False, False)
         self.pack(fill=BOTH)
@@ -183,4 +183,3 @@ class MainWindow(Frame):
         self.dirLocatorBtn.config(state='normal')
         if capture.instance.hasCam():
             self.webcamCheckbox.config(state='normal')
-

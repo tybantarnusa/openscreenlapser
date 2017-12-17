@@ -1,5 +1,5 @@
-from openscreenlapser.aesthetic import main_window
-from openscreenlapser.logic import capture
+from aesthetic import main_window
+from logic import capture
 
 def main():
     app = main_window.MainWindow()
@@ -8,3 +8,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
