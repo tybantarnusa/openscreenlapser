@@ -1,38 +1,59 @@
 language: python
 python:
-  - "2.7"
+  - '2.7'
 services:
   - docker
 
 before_install:
-  - docker pull ubuntu:16.04
   - sudo apt-get -qq update
-  - sudo apt-get -y install autoconf automake build-essential libass-dev libfreetype6-dev libtheora-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texinfo wget zlib1g-dev
+  - sudo apt-get -y install autoconf automake build-essential libass-dev libfreetype6-dev
+    libtheora-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev
+    libxcb-xfixes0-dev pkg-config texinfo wget zlib1g-dev
   - sudo apt-get -y install yasm nasm libmp3lame-dev
   - mkdir ~/ffmpeg_sources
   - cd ~/ffmpeg_sources
   - wget http://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2
   - tar jxf ffmpeg-snapshot.tar.bz2
   - cd ffmpeg
-  - PATH="$HOME/bin:$PATH" PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure --prefix="$HOME/ffmpeg_build" --pkg-config-flags="--static" --extra-cflags="-I$HOME/ffmpeg_build/include" --extra-ldflags="-L$HOME/ffmpeg_build/lib" --bindir="$HOME/bin" --enable-libmp3lame
+  - PATH="$HOME/bin:$PATH" PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure
+    --prefix="$HOME/ffmpeg_build" --pkg-config-flags="--static" --extra-cflags="-I$HOME/ffmpeg_build/include"
+    --extra-ldflags="-L$HOME/ffmpeg_build/lib" --bindir="$HOME/bin" --enable-libmp3lame
   - PATH="$HOME/bin:$PATH" make -s -j
   - make install
   - hash -r
   - cd $TRAVIS_BUILD_DIR
-  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
+  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile
+    --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
 
 install:
   - pip install -r requirements.txt
 
 before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
   - sleep 3
 
 script:
   - cd openscreenlapser
   - python -m unittest discover test
-  - cd ..
-  - docker build -t osl_image .
+
+after_success:
+  - cd $TRAVIS_BUILD_DIR
+
+before_deploy:
+  - docker pull ubuntu:16.04
+  - docker build --build-arg TRAVIS_TAG=${TRAVIS_TAG} -t osl_image .
   - docker create --name osl_container osl_image
   - sudo docker cp osl_container:/app/deb_dist/ .
+
+deploy:
+  provider: releases
+  api_key:
+    secure: rK3FY84xnx7gM8fgwXsfySxE7rdsQEwFEAGk/ln8lHFQZfGWd+ZBmtN+U7y68GG2GzjMFg85GA449/hS9LRVKDxkC7ewY2WS5Lb6Awl4E9dLdpyQCAJdfXerNMa45bHTiqCqPlpyoR2zpQhpzPZLPfv65Mj1rOe4yAwTFTXyFbURtHHbVcGd8pK0bSKt8eBL451J2rxYgB2MEsxvtA+KADg3Qkjynss4eSvG3R8fQwnupJ7mCJGqvKvQDp3ZhTE/cfIxwPrMNgOpo7llvb9An6T/pgtNvK2k/MYAVhSJxW7Y83D1N3HN1HKVkVhVEglrUavdhUUHokAenM4lR3FAYSiN2xH7gaY9VaE78syiuF5tXejfilpxnGlgSQqgSQkEKcq3Dxbt3MEVHRdJa9Apaq3fTvXrDuZ1i4FycnMYzR9JtqYDVc73ubUZdBEO8LufP4iDn/U1Iq7+3Vo8UqadfxhONhUFBdjpTG/tkLjiDJtCTjpHPQMe2RPYGWiv/LUw61l8Mvv6EnDg4pU3hRc1BS3GLe8IRApN+tBax35cMN2ufsGkHuXsXo4sh51EoVNzBzaniuwojSXxS99R7FJ4J6Rp9JowE3AqNWx6Uui9XvfFWLo59GnZA+tli/NqDI0xnZnCCr1Q5f/c37fuwGIY3RFxVTvLdP1oS9JOYOEQUVc=
+  file_glob: true
+  file: deb_dist/openscreenlapser_*.deb
+  skip_cleanup: true
+  on:
+    repo: tybantarnusa/openscreenlapser
+    branch: master
+    tags: true

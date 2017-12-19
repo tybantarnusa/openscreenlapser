@@ -1,5 +1,7 @@
 FROM ubuntu:16.04
 
+ARG TRAVIS_TAG='1.0.0'
+
 WORKDIR /app
 ADD . /app
 
@@ -24,6 +26,3 @@ RUN easy_install pip
 RUN pip install -r requirements.txt
 
 RUN python setup.py --command-packages=stdeb.command bdist_deb
-
-RUN ls deb_dist
-
