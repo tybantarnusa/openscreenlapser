@@ -1,8 +1,11 @@
 language: python
 python:
   - "2.7"
+services:
+  - docker
 
 before_install:
+  - docker pull ubuntu:16.04
   - sudo apt-get -qq update
   - sudo apt-get -y install autoconf automake build-essential libass-dev libfreetype6-dev libtheora-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texinfo wget zlib1g-dev
   - sudo apt-get -y install yasm nasm libmp3lame-dev
@@ -29,3 +32,7 @@ before_script:
 script:
   - cd openscreenlapser
   - python -m unittest discover test
+  - cd ..
+  - docker build -t osl_image .
+  - docker create --name osl_container osl_image
+  - sudo docker cp osl_container:/app/deb_dist/ .
