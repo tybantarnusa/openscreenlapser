@@ -46,7 +46,7 @@ $ docker build -t osl_image .
 Create the container and copy the debian package from the container to the host.
 ```{bash}
 $ docker create --name osl_container osl_image
-$ sudo docker cp osl_container:/app/deb_dist/ .
+$ docker cp osl_container:/app/deb_dist/ .
 ```
 
 You can find the debian package inside `deb_dist` directory.
