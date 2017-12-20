@@ -44,7 +44,7 @@ before_deploy:
   - docker pull ubuntu:16.04
   - docker build --build-arg TRAVIS_TAG=${TRAVIS_TAG} -t osl_image .
   - docker create --name osl_container osl_image
-  - sudo docker cp osl_container:/app/deb_dist/ .
+  - docker cp osl_container:/app/deb_dist/ .
 
 deploy:
   provider: releases

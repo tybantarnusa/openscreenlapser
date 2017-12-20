@@ -1,8 +1,8 @@
 from Tkinter import *
 import tkFileDialog
 import time
-from logic import capture
-from logic import create_video
+from openscreenlapser.logic import capture
+from openscreenlapser.logic import create_video
 
 class MainWindow(Frame):
     def __init__(self, master=None):
