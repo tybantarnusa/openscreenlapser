@@ -1,16 +1,16 @@
+import os
 from setuptools import setup
 
 REQUIRED = [
-    'ffmpeg',
-    'python-pip',
-    'python-pil',
-    'scrot',
-    'python-pygame',
+    'Pillow',
+    'pygame'
 ]
+
+VERSION = os.getenv('TRAVIS_TAG', '1.0.0')
 
 setup(
     name='openscreenlapser',
-    version='1.0.0',
+    version=VERSION,
     description='Screen timelapse video maker.',
     author='Mgs. M. Thoyib Antarnusa',
     author_email='tybantarnusa@null.net',
