@@ -45,9 +45,6 @@ before_deploy:
   - docker build --build-arg TRAVIS_TAG=${TRAVIS_TAG} -t osl_image .
   - docker create --name osl_container osl_image
   - docker cp osl_container:/app/deb_dist/ .
-  - cd deb_dist
-  - debsign -S -k${KEYID} openscreenlapser_*_source.changes
-  - dput ppa:tybantarnusa/ppa openscreenlapser_*_source.changes
 
 deploy:
   provider: releases
@@ -60,7 +57,3 @@ deploy:
     repo: tybantarnusa/openscreenlapser
     branch: master
     tags: true
-
-env:
-  global:
-    secure: VSFR9g/tqceVqufla4bhS+XzwAx67DS+D0x38vNKbn7EG99owvpZw/7YeJOZjBLE42l8hOfnww1Pu1paxZkm2cFVqebGhMzkRn3Mvkv9Yj57KuaCvFXGlM2SSy7KNaFRyrm+2gLj3n47lqPOd+KinW3pR2zf+EI+3gx1ExgHPELN2kwfUzgHe9aP7h1eQGe4fdrDzF3sVZ+TznCpoYzuwB8BLAOoDIkR0sYAN/I6lEwN5jxaae8vhwQ7oZ2/0YxL6rkSTEMrFYjDrgLH/ZJJiKi6VyP25p0FZsJl9llQRg/vpGK1MCL0k7aK9+GLuPUf9MTZsw4wC3BpbK5TrjxdCVrX/7UV2/agF/TvT+Zo1R3+bS5KwzUIh4EPIvmXW84hewwgM9IZmX+nK6rMdv28fsZL6/6pfvn+iKtUYZMR9wL3BVfXKvhuDD4WxDbXYTA8SeIxgQFfl0TPNoLwECHIVBwLP7wyJuclO6+sIMrWiko/0xAYPKcrPrTE80eCZQCXeE6DK7Bd56EcfT7adGPUhTaBAzDdqUcuWRDiOnYyviv6iBOw28S16LoZhTX07MiP0WWoyjz7VRovGQLAFdfn69do5ZOBlCkG74q2NMPBk3jacJTRFtib175hoFOhCpi1k4fFRVatrAvoUskewxYrg8QQujuAlC7VzErNWrFgoeY=
