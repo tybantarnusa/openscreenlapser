@@ -1,7 +1,7 @@
 import unittest
 import os.path
-from logic import create_video
-from logic import capture
+from openscreenlapser.logic import create_video
+from openscreenlapser.logic import capture
 
 class TestCaptureLogic(unittest.TestCase):
     def setUp(self):

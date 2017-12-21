@@ -1,10 +1,11 @@
 from setuptools import setup
 
 REQUIRED = [
-    'Pillow',
-    'pyscreenshot',
-    'ffmpeg-python',
-    'pygame'
+    'ffmpeg',
+    'python-pip',
+    'python-pil',
+    'scrot',
+    'python-pygame',
 ]
 
 setup(
@@ -24,5 +25,9 @@ setup(
     },
     classifiers=[
         'License :: OSI Approved :: Apache Software License',
+        'Programming Language :: Python :: 2.7',
+        'Topic :: Multimedia :: Graphics :: Capture :: Screen Capture',
+        'Topic :: Multimedia :: Sound/Audio :: Capture/Recording',
+        'Topic :: Multimedia :: Video :: Capture',
     ],
 )

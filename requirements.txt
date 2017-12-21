@@ -2,3 +2,5 @@ Pillow
 pyscreenshot
 ffmpeg-python
 pygame
+python-coveralls
+coverage

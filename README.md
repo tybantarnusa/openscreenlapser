@@ -64,19 +64,39 @@ You can find the debian package inside `deb_dist` directory.
 
 ## Installation
 
+### Preparation
+
+Before installing, you need to install dependencies.
+```{bash}
+$ pip install pyscreenshot ffmpeg-python
+```
+
+**NOTE:** We're currently having problem building the debian package because it depends on Python libraries from PyPi which do not exist in standard Linux repository. Therefore, you have to manually install it first. Any contribution regarding this is highly appreciated.
+
+### Via PPA (Ubuntu)
+
+Add this PPA to your system's Software Sources and install.
+```{bash}
+$ sudo add-apt-repository ppa:tybantarnusa/ppa
+$ sudo apt-get update
+$ sudo apt-get install openscreenlapser
+```
+
+### Via debian package
+
 First, you have to get the debian package. You can build from source or [download releases](https://github.com/tybantarnusa/openscreenlapser/releases).
 
 Execute the .deb package to install.
 ```{bash}
 $ sudo dpkg -i openscreenlapser_{version}_all.deb
+$ sudo apt-get install -f
 ```
 
 ## Running tests
 
-Running tests is done using Python unittest.
+Running tests is done using Python unittest and [coverage](https://pypi.python.org/pypi/coverage).
 ```{bash}
-$ cd openscreenlapser
-$ python -m unittest discover test
+$ coverage -m unittest discover test
 ```
 
 ## License
@@ -85,8 +105,8 @@ This project is licensed under the Apache License 2.0. See [LICENSE](https://git
 
 ## Contributing
 
-1. Fork it
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a new Pull Request
+1. Fork it,
+2. Create your feature branch,
+3. Commit your changes,
+4. Push to the branch,
+5. Create a new Pull Request.

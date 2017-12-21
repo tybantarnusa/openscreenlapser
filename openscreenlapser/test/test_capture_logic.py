@@ -1,5 +1,5 @@
 import unittest
-from logic import capture
+from openscreenlapser.logic import capture
 
 class TestCaptureLogic(unittest.TestCase):
     def setUp(self):

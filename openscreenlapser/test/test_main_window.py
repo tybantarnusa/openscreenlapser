@@ -1,6 +1,6 @@
 import unittest
-from aesthetic import main_window as window
-from logic import capture
+from openscreenlapser.aesthetic import main_window as window
+from openscreenlapser.logic import capture
 
 class TestMainWindow(unittest.TestCase):
     def setUp(self):
