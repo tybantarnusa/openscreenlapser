@@ -96,7 +96,7 @@ $ sudo apt-get install -f
 
 Running tests is done using Python unittest and [coverage](https://pypi.python.org/pypi/coverage).
 ```{bash}
-$ coverage -m unittest discover test
+$ coverage run -m unittest discover
 ```
 
 ## License
