@@ -1,6 +1,7 @@
 import unittest
 from openscreenlapser.aesthetic import main_window as window
 from openscreenlapser.logic import capture
+from Tkinter import Checkbutton, IntVar
 
 class TestMainWindow(unittest.TestCase):
     def setUp(self):
@@ -37,6 +38,54 @@ class TestMainWindow(unittest.TestCase):
         self.w.handleCapture()
         self.assertEqual(capture.instance.intervaltime, number)
 
+    def test_create_webcam_checkbox(self):
+        checkbox = self.w.createWebcamCheckbox()
+        self.assertIsInstance(checkbox, Checkbutton)
+
+    def test_update_webcam_logic(self):
+        class MockWebcam:
+            def start(self):
+                pass
+            def stop(self):
+                pass
+
+        capture.instance.cam = MockWebcam()
+        self.w.usingWebcam.set(0)
+        self.w.updateWebcamLogic()
+        self.assertEqual(capture.instance.usingWebcam, False)
+
+        self.w.usingWebcam.set(1)
+        self.w.updateWebcamLogic()
+        self.assertEqual(capture.instance.usingWebcam, True)
+
+    def test_hide_create_video_button(self):
+        self.w.hideCreateVideoButton()
+
+    def test_show_capture_button(self):
+        self.w.showCaptureButton()
+
+    def test_handle_start_over(self):
+        self.w.handleStartOver()
+        self.assertEqual(self.w.startbtntext.get(), 'Start Capturing!')
+        self.assertEqual(self.w.startButton.cget('state'), 'normal')
+
+    def test_disable_all(self):
+        capture.instance.cam = 1
+        self.w.disableAll()
+        self.assertEqual(self.w.nameEntry.cget('state'), 'disabled')
+        self.assertEqual(self.w.pathEntry.cget('state'), 'disabled')
+        self.assertEqual(self.w.intervalEntry.cget('state'), 'disabled')
+        self.assertEqual(self.w.dirLocatorBtn.cget('state'), 'disabled')
+        self.assertEqual(self.w.webcamCheckbox.cget('state'), 'disabled')
+
+    def test_enable_all(self):
+        capture.instance.cam = 1
+        self.w.enableAll()
+        self.assertEqual(self.w.nameEntry.cget('state'), 'normal')
+        self.assertEqual(self.w.pathEntry.cget('state'), 'normal')
+        self.assertEqual(self.w.intervalEntry.cget('state'), 'normal')
+        self.assertEqual(self.w.dirLocatorBtn.cget('state'), 'normal')
+        self.assertEqual(self.w.webcamCheckbox.cget('state'), 'normal')
 
 if __name__ == '__main__':
     unittest.main()

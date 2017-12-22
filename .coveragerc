@@ -1,3 +1,3 @@
 [run]
-source = openscreenlapser
-omit = openscreenlapser/test/*,*/__init__.py
+source=openscreenlapser
+omit=openscreenlapser/test/*,*/__init__.py,main.py

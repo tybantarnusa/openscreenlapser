@@ -6,3 +6,4 @@ openscreenlapser.egg-info/
 openscreenlapser-*.tar.gz
 *.pyc
 .coverage
+out.mp4
