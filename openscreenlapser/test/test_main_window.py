@@ -71,6 +71,7 @@ class TestMainWindow(unittest.TestCase):
 
     def test_disable_all(self):
         capture.instance.cam = 1
+        self.w = window.MainWindow()
         self.w.disableAll()
         self.assertEqual(self.w.nameEntry.cget('state'), 'disabled')
         self.assertEqual(self.w.pathEntry.cget('state'), 'disabled')
@@ -80,6 +81,7 @@ class TestMainWindow(unittest.TestCase):
 
     def test_enable_all(self):
         capture.instance.cam = 1
+        self.w = window.MainWindow()
         self.w.enableAll()
         self.assertEqual(self.w.nameEntry.cget('state'), 'normal')
         self.assertEqual(self.w.pathEntry.cget('state'), 'normal')
