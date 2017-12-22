@@ -6,7 +6,7 @@ from Tkinter import Checkbutton, IntVar
 class TestMainWindow(unittest.TestCase):
     def setUp(self):
         self.w = window.MainWindow()
-        pass
+        capture.instance = capture.Capture()
 
     def test_handleCapture_when_not_capturing(self):
         self.w.isCapturing = False

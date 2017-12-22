@@ -6,6 +6,11 @@ from openscreenlapser.logic import create_video
 
 class MainWindow(Frame):
     def __init__(self, master=None):
+        self.intervalEntry = None
+        self.webcamCheckbox = None
+        self.ori_abg = None
+        self.ori_bg = None
+        
         Frame.__init__(self, master, padx=10, pady=10)
 
         self.savedir = StringVar()
@@ -63,7 +68,8 @@ class MainWindow(Frame):
 
     def locateSaveDir(self):
         output = tkFileDialog.askdirectory(parent=self, initialdir=capture.instance.savedir, title='Output screenshots directory...')
-        if len(output) > 0:
+        len_output = len(output)
+        if len_output > 0:
             self.savedir.set(output)
             capture.instance.savedir = output
 
@@ -152,7 +158,8 @@ class MainWindow(Frame):
     def handleCreateVideo(self):
         ftypes = [('MP4', '.mp4'), ('All files', '*')]
         out = tkFileDialog.asksaveasfilename(parent=self, initialdir=capture.instance.savedir, title='Save video as', filetypes=ftypes, defaultextension='.mp4')
-        if len(out) > 0:
+        len_out = len(out)
+        if len_out > 0:
             self.hideCreateVideoButton()
             self.showCaptureButton()
             self.startbtntext.set('Creating video...')

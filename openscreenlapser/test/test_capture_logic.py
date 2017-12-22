@@ -4,7 +4,7 @@ from PIL import Image
 
 class TestCaptureLogic(unittest.TestCase):
     def setUp(self):
-        pass
+        capture.instance = capture.Capture()
 
     def test_start(self):
         capture.instance.isCapturing = False
@@ -43,8 +43,8 @@ class TestCaptureLogic(unittest.TestCase):
             def stop(self):
                 pass
                 
-        capture.instance.startWebcam()
         capture.instance.cam = MockWebcam()
+        capture.instance.startWebcam()
         self.assertEqual(capture.instance.usingWebcam, True)
 
     def test_stop_webcam(self):
@@ -54,8 +54,8 @@ class TestCaptureLogic(unittest.TestCase):
             def stop(self):
                 pass
 
-        capture.instance.stopWebcam()
         capture.instance.cam = MockWebcam()
+        capture.instance.stopWebcam()
         self.assertEqual(capture.instance.usingWebcam, False)
 
     def test_logic_loop(self):
