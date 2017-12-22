@@ -17,6 +17,7 @@ class Capture:
         self.filename = ''
         self.usingWebcam = False
         self.initWebcam()
+        self.webcam_pos = 'NW'
 
     def start(self):
         if not os.path.exists(self.savedir):
@@ -48,7 +49,18 @@ class Capture:
         webcamH = int((3.0 * webcamW) / 4.0)
 
         webcamImage.thumbnail((webcamW, webcamH))
-        baseImage.paste(webcamImage, (5, 5))
+
+        _pos = self.webcam_pos
+        if _pos == 'NE':
+            pos = (w - 5 - webcamW, 5)
+        elif _pos == 'SW':
+            pos = (5, h - 5 - webcamH)
+        elif _pos == 'SE':
+            pos = (w - 5 - webcamW, h - 5 - webcamH)
+        else:
+            pos = (5, 5)
+
+        baseImage.paste(webcamImage, pos)
         return baseImage
 
     def initWebcam(self):
@@ -88,5 +100,8 @@ class Capture:
 
     def setFileName(self, name):
         self.filename = name
+
+    def change_webcam_pos(self, position):
+        self.webcam_pos = position
 
 instance = Capture()

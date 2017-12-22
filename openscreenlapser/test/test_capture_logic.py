@@ -1,4 +1,5 @@
 import unittest
+import shutil
 from openscreenlapser.logic import capture
 from PIL import Image
 
@@ -7,9 +8,11 @@ class TestCaptureLogic(unittest.TestCase):
         capture.instance = capture.Capture()
 
     def test_start(self):
+        capture.instance.savedir = './captures'
         capture.instance.isCapturing = False
         capture.instance.start()
         self.assertEqual(capture.instance.isCapturing, True)
+        shutil.rmtree('./captures')
 
     def test_stop(self):
         capture.instance.isCapturing = True
@@ -33,6 +36,19 @@ class TestCaptureLogic(unittest.TestCase):
         im1 = Image.new('RGB', (100, 100))
         im2 = Image.new('RGB', (100, 100))
 
+        capture.instance.webcam_pos = 'NW'
+        combined = capture.instance.combineImageWebcam(im1, im2)
+        self.assertIsInstance(combined, Image.Image)
+
+        capture.instance.webcam_pos = 'NE'
+        combined = capture.instance.combineImageWebcam(im1, im2)
+        self.assertIsInstance(combined, Image.Image)
+
+        capture.instance.webcam_pos = 'SW'
+        combined = capture.instance.combineImageWebcam(im1, im2)
+        self.assertIsInstance(combined, Image.Image)
+
+        capture.instance.webcam_pos = 'SE'
         combined = capture.instance.combineImageWebcam(im1, im2)
         self.assertIsInstance(combined, Image.Image)
 

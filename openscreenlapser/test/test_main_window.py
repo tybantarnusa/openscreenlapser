@@ -89,5 +89,9 @@ class TestMainWindow(unittest.TestCase):
         self.assertEqual(self.w.dirLocatorBtn.cget('state'), 'normal')
         self.assertEqual(self.w.webcamCheckbox.cget('state'), 'normal')
 
+    def test_change_webcam_pos(self):
+        self.w.change_webcam_pos()
+        self.assertEqual(capture.instance.webcam_pos, 'NW')
+
 if __name__ == '__main__':
     unittest.main()
